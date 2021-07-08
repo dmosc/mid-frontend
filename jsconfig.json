@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "baseUrl": "src",
-    "paths": {
-      "config/*": ["./src/config"],
-      "client/*": ["./src/client"]
-    }
+    "baseUrl": "src"
   }
 }

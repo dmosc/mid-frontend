@@ -1,19 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import client from 'client';
+import React, {lazy, Suspense} from 'react';
+import TopBarProgress from 'react-topbar-progress-indicator';
+import {Redirect, Route, Switch} from 'react-router-dom';
+import Auth from 'views/auth';
+import MainLayout from 'layout/main';
+import {useUser} from './providers/user';
+
+const Home = lazy(() => import('views/home'));
 
 const App = () => {
-  const [message, setMessage] = useState(undefined);
+  const {isLogged} = useUser();
 
-  useEffect(() => {
-    (async () => {
-      const {data, error} = await client.get('/');
+  if (!isLogged) return <Auth />;
 
-      if (error) setMessage(error.toString());
-      else setMessage(data);
-    })();
-  }, []);
-
-  return <div>{message}</div>;
+  return (
+    <Suspense fallback={<TopBarProgress />}>
+      <MainLayout>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Redirect to='/' />
+        </Switch>
+      </MainLayout>
+    </Suspense>
+  );
 };
 
 export default App;

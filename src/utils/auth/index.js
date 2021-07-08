@@ -1,8 +1,9 @@
 import axios from 'axios';
-import {BACKEND_ENDPOINT} from 'config';
+import {backend} from 'config/environment';
 
 const client = axios.create({
-  baseURL: BACKEND_ENDPOINT,
+  baseURL: backend.AUTH_URI,
+  withCredentials: true,
   timeout: 100000,
   headers: {
     'Content-Type': 'application/json',
