@@ -5,7 +5,8 @@ import Auth from 'views/auth';
 import MainLayout from 'layout/main';
 import {useUser} from './providers/user';
 
-const Home = lazy(() => import('views/home'));
+const Mediations = lazy(() => import('views/mediations'));
+const Complaints = lazy(() => import('views/complaints'));
 
 const App = () => {
   const {isLogged} = useUser();
@@ -13,14 +14,15 @@ const App = () => {
   if (!isLogged) return <Auth />;
 
   return (
-    <Suspense fallback={<TopBarProgress />}>
-      <MainLayout>
+    <MainLayout>
+      <Suspense fallback={<TopBarProgress />}>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Redirect to='/' />
+          <Route exact path='/mediations' component={Mediations} />
+          <Route exact path='/complaints' component={Complaints} />
+          <Redirect to='/mediations' />
         </Switch>
-      </MainLayout>
-    </Suspense>
+      </Suspense>
+    </MainLayout>
   );
 };
 
